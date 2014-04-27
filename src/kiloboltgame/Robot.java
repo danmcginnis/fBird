@@ -13,14 +13,8 @@ public class Robot {
 	private int centerY = 377;
 
 	private int speedY = 0;
-	public static Rectangle rect = new Rectangle(0, 0, 0, 0);
-	public static Rectangle rect2 = new Rectangle(0, 0, 0, 0);
-	public static Rectangle rect3 = new Rectangle(0, 0, 0, 0);
-	public static Rectangle rect4 = new Rectangle(0, 0, 0, 0);
+	public static Rectangle boundingBox = new Rectangle(0, 0, 0, 0);
 	
-	private Background bg1 = StartingClass.getBg1();
-	private Background bg2 = StartingClass.getBg2();
-
 	public void update() {
 		// Moves Character or Scrolls Background accordingly.
 
@@ -37,10 +31,7 @@ public class Robot {
 
 		// Prevents going beyond X coordinate of 0
 
-		rect.setRect(centerX - 34, centerY - 63, 68, 63);
-		rect2.setRect(rect.getX(), rect.getY() + 63, 68, 64);
-		rect3.setRect(rect.getX() - 26, rect.getY() + 32, 26, 20);
-		rect4.setRect(rect.getX() + 68, rect.getY() + 32, 26, 20);
+		boundingBox.setRect(centerX - 61, centerY - 62, 51, 34);
 	}
 
 
@@ -64,7 +55,9 @@ public class Robot {
 		return centerY;
 	}
 
-
+	public Rectangle getBoundingBox(){
+		return boundingBox;
+	}
 
 	public int getSpeedY() {
 		return speedY;
