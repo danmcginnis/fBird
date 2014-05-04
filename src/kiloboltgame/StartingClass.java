@@ -23,14 +23,13 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	}
 
 	GameState state = GameState.Paused;
-	private Rectangle robotBox;
-	static Robot robot;
+	private Rectangle birdCollision;
+	static Robot fBird;
 	ArrayList<Pipe> pipes;
 	public static int score = 0;
 	private Font font = new Font(null, Font.BOLD, 30);
 
 	private Image image, bird, background, background2, upPipe, downPipe;
-
 	private Graphics second;
 	private URL base;
 	private static Background bg1, bg2;
@@ -51,7 +50,6 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 			// TODO: handle exception
 		}
 
-		// Image Setups
 		bird = getImage(base, "data/flappybird.png");
 		bird = bird.getScaledInstance(51, 36, Image.SCALE_SMOOTH);
 		background = getImage(base, "data/background.jpg");
@@ -63,14 +61,13 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 		downPipe = getImage(base, "data/downPipe.png");
 		anim = new Animation();
 		anim.addFrame(bird, 1250);
-
 	}
 
 	@Override
 	public void start() {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
-		robot = new Robot();
+		fBird = new Robot();
 		int y1 = (int) (Math.random() * (-450)) - 300;
 		pipes.add(new Pipe('d', y1, 500));
 		pipes.add(new Pipe('u', y1, 500));
@@ -102,7 +99,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 				bg1.update();
 				if (state == GameState.Running) {
-					robot.update();
+					fBird.update();
 					int y1 = 0;
 					for (int pcount = 0; pcount < pipes.size(); pcount++) {
 						Pipe p = pipes.get(pcount);
@@ -124,10 +121,10 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 					}
 
 					// update each pipe's location
-					robotBox = robot.getBoundingBox();
+					birdCollision = fBird.getBoundingBox();
 					for (int pcount = 0; pcount < pipes.size(); pcount++) {
 
-						if (robotBox.intersects(pipes.get(pcount)
+						if (birdCollision.intersects(pipes.get(pcount)
 								.getBoundingBox())) {
 							state = GameState.Dead;
 						}
@@ -170,9 +167,10 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 		if (state == GameState.Running || state == GameState.Paused) {
 
-			g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
+			g.drawImage(background, bg1.getBackGroundX(), bg1.getBackGroundY(),
+					this);
 
-			g.drawImage(bird, robot.getCenterX() - 61, robot.getCenterY() - 63,
+			g.drawImage(bird, fBird.getCenterX() - 61, fBird.getCenterY() - 63,
 					this);
 			for (int pcount = 0; pcount < pipes.size(); pcount++) {
 				Pipe p = pipes.get(pcount);
@@ -185,23 +183,17 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 				}
 
 			}
-			if (robot.getCenterY() > 720) {
+			if (fBird.getCenterY() > 720) {
 				state = GameState.Dead;
 			}
-			g.drawImage(background2, bg2.getBgX(), bg2.getBgY(), this);
+			g.drawImage(background2, bg2.getBackGroundX(),
+					bg2.getBackGroundY(), this);
 			g.setFont(font);
 			g.setColor(Color.WHITE);
 			g.drawString(Integer.toString(score), 400, 30);
 			g.setColor(new Color(0, 255, 0, 130));
 			if (state == GameState.Running)
-				// g.fillRect((int)robotBox.getX(),(int) robotBox.getY(),
-				// robotBox.width, robotBox.height);
 				g.setColor(new Color(255, 0, 0, 130));
-			// for (int pcount=0;pcount<pipes.size();pcount++)
-			// g.fillRect((int)pipes.get(pcount).getBoundingBox().getX(),
-			// (int)pipes.get(pcount).getBoundingBox().getY(),
-			// pipes.get(pcount).getBoundingBox().width,
-			// pipes.get(pcount).getBoundingBox().height);
 		} else if (state == GameState.Dead) {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, 800, 480);
@@ -223,11 +215,11 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 		case KeyEvent.VK_SPACE:
 			if (state == GameState.Running) {
-				robot.jump();
+				fBird.jump();
 				break;
 			} else if (state == GameState.Paused) {
 				state = GameState.Running;
-				robot.jump();
+				fBird.jump();
 				break;
 			} else if (state == GameState.Dead) {
 				state = GameState.Paused;
@@ -249,7 +241,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	public void reset() {
 		pipes = new ArrayList<Pipe>();
 		score = 0;
-		robot = new Robot();
+		fBird = new Robot();
 		int y1 = (int) (Math.random() * (-450)) - 300;
 		pipes.add(new Pipe('d', y1, 500));
 		pipes.add(new Pipe('u', y1, 500));
@@ -265,10 +257,8 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
-
 		case KeyEvent.VK_SPACE:
 			break;
-
 		}
 
 	}
@@ -288,7 +278,6 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	}
 
 	public static Robot getRobot() {
-		return robot;
+		return fBird;
 	}
-
 }
