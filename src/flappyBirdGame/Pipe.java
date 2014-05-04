@@ -1,4 +1,4 @@
-package kiloboltgame;
+package flappyBirdGame;
 
 import java.awt.Rectangle;
 

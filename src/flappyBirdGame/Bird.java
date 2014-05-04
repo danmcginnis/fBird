@@ -1,8 +1,8 @@
-package kiloboltgame;
+package flappyBirdGame;
 
 import java.awt.Rectangle;
 
-public class Robot {
+public class Bird {
 
 	final int JUMPSPEED = -15;
 	final int MOVESPEED = 5;

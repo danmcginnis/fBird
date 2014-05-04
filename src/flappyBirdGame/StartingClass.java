@@ -1,4 +1,4 @@
-package kiloboltgame;
+package flappyBirdGame;
 
 import java.applet.Applet;
 import java.awt.Color;
@@ -8,12 +8,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import kiloboltgame.framework.Animation;
+import flappyBirdGame.framework.Animation;
 import java.awt.Rectangle;
 
 public class StartingClass extends Applet implements Runnable, KeyListener {
@@ -24,7 +21,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 
 	GameState state = GameState.Paused;
 	private Rectangle birdCollision;
-	static Robot fBird;
+	static Bird fBird;
 	ArrayList<Pipe> pipes;
 	public static int score = 0;
 	private Font font = new Font(null, Font.BOLD, 30);
@@ -67,7 +64,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	public void start() {
 		bg1 = new Background(0, 0);
 		bg2 = new Background(2160, 0);
-		fBird = new Robot();
+		fBird = new Bird();
 		int y1 = (int) (Math.random() * (-450)) - 300;
 		pipes.add(new Pipe('d', y1, 500));
 		pipes.add(new Pipe('u', y1, 500));
@@ -241,7 +238,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	public void reset() {
 		pipes = new ArrayList<Pipe>();
 		score = 0;
-		fBird = new Robot();
+		fBird = new Bird();
 		int y1 = (int) (Math.random() * (-450)) - 300;
 		pipes.add(new Pipe('d', y1, 500));
 		pipes.add(new Pipe('u', y1, 500));
@@ -277,7 +274,7 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 		return bg2;
 	}
 
-	public static Robot getRobot() {
+	public static Bird getRobot() {
 		return fBird;
 	}
 }
